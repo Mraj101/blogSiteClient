@@ -1,44 +1,65 @@
 import React, { useState } from "react";
+import axios from "axios";
 
 const CreateBlog = () => {
   const [formData, setFormData] = useState({
     title: "",
     content: "",
+    image: null,
     imagePreview: null,
+    imageLink: "", 
   });
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: files ? files[0] : value,
-      imagePreview: files
-        ? URL.createObjectURL(files[0])
-        : prevData.imagePreview,
-    }));
+    if (name === "image" && files && files.length > 0) {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: files[0],
+        imagePreview: URL.createObjectURL(files[0]),
+      }));
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: value,
+      }));
+    }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Handle form submission (e.g., send data to backend or store in state)
-    console.log("Blog Title:", formData.title);
-    console.log("Blog Content:", formData.content);
-    console.log("Image File:", formData.image);
-    // Reset form fields
-    setFormData({
-      title: "",
-      content: "",
-      image: null,
-      imagePreview: null,
-    });
-  };
 
+    const blogData = {
+      title: formData.title,
+      content: formData.content,
+      img: formData.imageLink || (formData.image && formData.image.path), // Assuming you have a 'path' property in your uploaded file object
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/blogs/crt",
+        blogData,
+      );
+      console.log("Blog created successfully!", response.data);
+      // Reset form fields
+      setFormData({
+        title: "",
+        content: "",
+        imagePreview: null,
+        imageLink: "",
+      });
+    } catch (error) {
+      console.error("There was a problem creating the blog:", error);
+    }
+  };
+  
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center mb-6">
         Create a New Blog
       </h1>
       <form onSubmit={handleSubmit}>
+        {/* Form fields as before */}
         <div className="mb-4">
           <label htmlFor="title" className="block text-lg font-medium mb-2">
             Blog Title
@@ -87,6 +108,28 @@ const CreateBlog = () => {
             />
           )}
         </div>
+
+        {/* imgage link preview. */}
+        {/* <div className="mb-4">
+          <label htmlFor="imageLink" className="block text-lg font-medium mb-2">
+            paste your image link here
+          </label>
+          <input
+            type="text"
+            id="imageLink"
+            name="imageLink"
+            value={formData.imageLink}
+            onChange={handleChange}
+            className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
+          />
+          {formData.imageLink && !formData.imagePreview && (
+            <img
+              src={formData.imageLink}
+              alt="Image Preview"
+              className="mt-3 w-full rounded-md"
+            />
+          )}
+        </div> */}
         <button
           type="submit"
           className="w-full bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
