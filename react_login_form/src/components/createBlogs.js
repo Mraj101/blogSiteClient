@@ -7,7 +7,7 @@ const CreateBlog = () => {
     content: "",
     image: null,
     imagePreview: null,
-    imageLink: "", 
+    imageLink: "",
   });
 
   const handleChange = (e) => {
@@ -28,19 +28,40 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const formInstance = new FormData();
 
-    const blogData = {
-      title: formData.title,
-      content: formData.content,
-      img: formData.imageLink || (formData.image && formData.image.path), // Assuming you have a 'path' property in your uploaded file object
-    };
+    // const blogData = {
+    //   title: formData.title,
+    //   content: formData.content,
+    //   img: formData.image, // Assuming you have a 'path' property in your uploaded file object
+    // };
+    // console.log(blogData,"blog data");
+
+    // formInstance.append('my form Data',blogData);
+
+    formInstance.append("title", formData.title);
+    formInstance.append("content", formData.content);
+    formInstance.append("img", formData.image); 
+
+    // console.log("FormData entries:");
+    // const entries = [];
+    // for (const entry of formInstance.entries()) {
+    //   entries.push(entry);
+    // }
+    console.log(...formInstance.entries());
+    // console.log(formInstance.entries(), "form entries");
 
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/blogs/crt",
-        blogData,
+        formInstance,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
       );
-      console.log("Blog created successfully!", response.data);
+      // console.log("Blog created successfully!", response.data);
       // Reset form fields
       setFormData({
         title: "",
@@ -52,7 +73,7 @@ const CreateBlog = () => {
       console.error("There was a problem creating the blog:", error);
     }
   };
-  
+
   return (
     <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center mb-6">
@@ -103,7 +124,7 @@ const CreateBlog = () => {
           {formData.imagePreview && (
             <img
               src={formData.imagePreview}
-              alt="Image Preview"
+              alt=" Preview"
               className="mt-3 w-full rounded-md"
             />
           )}
