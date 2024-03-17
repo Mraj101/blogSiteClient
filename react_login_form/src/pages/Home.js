@@ -20,24 +20,27 @@ const Home = () => {
 
   return (
     <>
+    {blogs && (
       <div className="container mx-auto px-4 py-8 flex relative">
-        <div className=" mx-auto w-[80%]">
-          {blogs.map((blog, index) => (
-            <Blog
-              key={index}
-              title={blog.title}
-              content={blog.content}
-              imageUrl={blog.img}
-            />
-          ))}
-        </div>
-        <div className="border border-gray-300 w-[200px] rounded-lg text-center fixed right-5 h-[60px]">
-          <h1>Popular blogs</h1>
-          <div>
-            <h2>Title: </h2>
-          </div>
+      <div className=" mx-auto w-[60%]">
+        {blogs.map((blog, index) => (
+          <Blog
+            key={index}
+            title={blog.title}
+            content={blog.content}
+            imageUrl={blog.img}
+            blogId={blog._id}
+          />
+        ))}
+      </div>
+      <div className="border border-gray-300 w-[200px] rounded-lg text-center fixed right-5 h-[60px]">
+        <h1>Popular blogs</h1>
+        <div>
+          <h2>Title: </h2>
         </div>
       </div>
+    </div>
+    )}
     </>
   );
 };

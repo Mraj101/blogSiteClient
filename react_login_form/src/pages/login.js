@@ -1,16 +1,43 @@
 import { useState } from "react";
+import axios from "axios"; // Import Axios
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    try {
+      // Send login request
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/newuser/login",
+        {
+          email: email,
+          password: password
+        },
+        {
+          withCredentials: true // Include credentials (cookies) with the request
+        }
+      );
+
+      // Handle response here, for example, you can log the response data
+      console.log("Login response:", response.data);
+    } catch (error) {
+      // Handle error
+      console.error("Error logging in:", error);
+    }
   };
 
   return (
     <div className="flex items-center justify-center bg-gray-200 h-[570px]">
-      <form className="w-full max-w-md p-8 bg-white rounded-lg shadow-md">
+      {/* Brand name section */}
+      <div className="mr-5 w-1/2 p-8 rounded-l-lg shadow-md">
+        <h1 className="text-3xl font-semibold mb-6">Bloggers Point</h1>
+  
+      </div>
+      {/* Login form section */}
+      <form className="w-1/2 max-w-md p-8 bg-white rounded-r-lg shadow-md">
         <h3 className="text-2xl font-semibold mb-6 text-center">Log In</h3>
 
         <div className="mb-6">

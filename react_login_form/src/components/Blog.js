@@ -1,11 +1,13 @@
 import React, { useState } from "react";
-
-const Blog = ({ title, content, imageUrl }) => {
+import { Link } from "react-router-dom";
+import { AuthContext } from "../context/AuthProvider";
+import { useAuthContext } from "../hooks/useAuthContext";
+const Blog = ({ title, content, imageUrl, blogId }) => {
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState([]);
   const [replyIndex, setReplyIndex] = useState(null);
   const [replyText, setReplyText] = useState("");
-
+  const {user} = useAuthContext(AuthContext)
   const handleCommentChange = (event) => {
     setComment(event.target.value);
   };
@@ -33,8 +35,8 @@ const Blog = ({ title, content, imageUrl }) => {
   };
 
   return (
-    <div className="container mx-auto px-4 py-8 w-[90%]">
-      <div className="border border-gray-50 max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-4">
+    <div className="container mx-auto px-4 py-8 w-[80%] bg-gray-100 ">
+      <div className="border border-gray-50 max-w-4xl mx-auto  shadow-lg rounded-lg overflow-hidden m-4 bg-gray-50">
         <img
           src={imageUrl}
           alt="Blog Post Image"
@@ -45,7 +47,7 @@ const Blog = ({ title, content, imageUrl }) => {
           <p className="text-gray-700 leading-relaxed break-words">
             Content: {content}
           </p>
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <h3 className="text-xl font-semibold mb-2">Comments</h3>
             <ul>
               {comments.map((comment, index) => (
@@ -85,9 +87,9 @@ const Blog = ({ title, content, imageUrl }) => {
                 </li>
               ))}
             </ul>
-          </div>
+          </div> */}
 
-          <div className="mt-6">
+          {/* <div className="mt-6">
             <div className="relative mt-4">
               <textarea
                 className="w-full h-20 border border-gray-300 rounded-md p-2 pl-10 resize-none"
@@ -115,9 +117,11 @@ const Blog = ({ title, content, imageUrl }) => {
                 </svg>
               </button>
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className=" text-center m-1  bg-red-300">read more</div>
+        <Link to={user?`/blog/${blogId}`:'/login'}>
+            <div   div className=" text-center bg-red-300">read more</div>
+        </Link>
       </div>
     </div>
   );

@@ -4,25 +4,29 @@ import CreateBlogs from "./components/createBlogs";
 import Navbar from "./components/Navbar"
 import Signup from "./pages/signup";
 import { useAuthContext } from "./hooks/useAuthContext";
+import { AuthContext } from "./context/AuthProvider";
+import SingleBlog from "./components/SingleBlog";
+import Login from "./pages/login";
 function App() {
-  const {user} = useAuthContext()
+  const {user} = useAuthContext(AuthContext)
   return (
     <Router>
-      <Navbar/>
+      {user?<Navbar/>:""}
       <Routes>
         <Route index element={<Home />} />
         <Route 
         path="/create" 
         element={<CreateBlogs />}
-        />
-         {/* <Route 
-              path="/login" 
-              element={!user? <Signup/>:navigate('/login')} 
-            />
+        /> 
         <Route 
-              path="/signup" 
-              element={!user? <Signup/>:navigate('/login')} 
-            /> */}
+        path="/blog/:id"
+        element={<SingleBlog/>}
+        />
+        
+        <Route 
+              path="/login" 
+              element={<Login/>} 
+            />
       </Routes>
     </Router>
   );
