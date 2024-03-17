@@ -34,13 +34,13 @@ const Blog = ({ title, content, imageUrl }) => {
 
   return (
     <div className="container mx-auto px-4 py-8 w-[90%]">
-      <div className="border border-black max-w-4xl mx-auto bg-white shadow-md rounded-lg overflow-hidden m-4">
+      <div className="border border-gray-50 max-w-4xl mx-auto bg-white shadow-lg rounded-lg overflow-hidden m-4">
         <img
           src={imageUrl}
           alt="Blog Post Image"
-          className="w-full h-[300px] object-cover"
+          className="w-full h-[300px] object-contain"
         />
-        <div className="p-6">
+        <div className="p-6 bg-blue-300">
           <h2 className="text-3xl font-semibold mb-4">Title: {title}</h2>
           <p className="text-gray-700 leading-relaxed break-words">
             Content: {content}
@@ -117,7 +117,7 @@ const Blog = ({ title, content, imageUrl }) => {
             </div>
           </div>
         </div>
-        <div className=" text-center m-1  bg-blue-300">read more</div>
+        <div className=" text-center m-1  bg-red-300">read more</div>
       </div>
     </div>
   );

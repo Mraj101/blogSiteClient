@@ -66,8 +66,8 @@ const CreateBlog = () => {
       setFormData({
         title: "",
         content: "",
-        imagePreview: null,
-        imageLink: "",
+        imagePreview: "",
+        // imageLink: "",
       });
     } catch (error) {
       console.error("There was a problem creating the blog:", error);
