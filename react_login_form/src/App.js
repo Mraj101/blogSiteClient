@@ -7,13 +7,15 @@ import { useAuthContext } from "./hooks/useAuthContext";
 import { AuthContext } from "./context/AuthProvider";
 import SingleBlog from "./components/SingleBlog";
 import Login from "./pages/login";
+import HomeLayout from "./pages/HomeLayout";
+import Hero from "./pages/Hero";
 function App() {
   const {user} = useAuthContext(AuthContext)
   return (
     <Router>
       <Navbar/>
       <Routes>
-        <Route index element={<Home />} />
+        <Route index element={<HomeLayout />} />
         <Route 
         path="/create" 
         element={<CreateBlogs />}
