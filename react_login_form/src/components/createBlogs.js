@@ -30,25 +30,18 @@ const CreateBlog = () => {
     e.preventDefault();
     const formInstance = new FormData();
 
-    // const blogData = {
-    //   title: formData.title,
-    //   content: formData.content,
-    //   img: formData.image, // Assuming you have a 'path' property in your uploaded file object
-    // };
-    // console.log(blogData,"blog data");
-
-    // formInstance.append('my form Data',blogData);
 
     formInstance.append("title", formData.title);
     formInstance.append("content", formData.content);
     formInstance.append("img", formData.image); 
+
 
     // console.log("FormData entries:");
     // const entries = [];
     // for (const entry of formInstance.entries()) {
     //   entries.push(entry);
     // }
-    console.log(...formInstance.entries());
+    // console.log(...formInstance.entries());
     // console.log(formInstance.entries(), "form entries");
 
     try {

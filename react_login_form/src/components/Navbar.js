@@ -8,7 +8,7 @@ const Navbar = () => {
           <div className="text-white font-bold text-2xl ">BLogs</div>
         </div>
         <div className="mx-8" >
-        <Link to="/create">
+        <Link to="/">
           <button className="text-white mr-4">Home</button>
           </Link>
           

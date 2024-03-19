@@ -1,21 +1,29 @@
-import { useState } from 'react';
-import { useAuthContext } from './useAuthContext';
-import axios from 'axios';
+import { useState } from "react";
+import { useAuthContext } from "./useAuthContext";
+import axios from "axios";
 
-export const useLogin = () => {
+export const UseLogin = () => {
+  console.log("hi");
+  // console.log("hllo");
   const [error, setError] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
+  console.log("hi");
+
   const { dispatch } = useAuthContext();
 
+  console.log("before login");
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
 
     try {
-      const response = await axios.post('/api/user/login', { email, password }, { withCredentials: true });
-      const user = response.data;
+      const response = await axios.post(
+        "http://localhost:8000/api/v1/newuser/login",
+        { email, password }
+      );
+      const user = response.data.data;
 
-      dispatch({ type: 'LOGIN', payload: user });
+      dispatch({ type: "LOGIN", payload: user });
 
       setIsLoading(false);
     } catch (error) {

@@ -1,28 +1,28 @@
 import { useState } from "react";
 import axios from "axios"; // Import Axios
+import { UseLogin } from "../hooks/useLogin";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-
+  const { login, isLoading, error } = UseLogin();
+  console.log(login)
   const handleSubmit = async (e) => {
     e.preventDefault();
-
+    console.log("submit");
     try {
+      
       // Send login request
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/newuser/login",
-        {
-          email: email,
-          password: password
-        },
-        {
-          withCredentials: true // Include credentials (cookies) with the request
-        }
-      );
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/newuser/login",
+      //   {
+      //     email: email,
+      //     password: password
+      //   },
+      // );
 
       // Handle response here, for example, you can log the response data
-      console.log("Login response:", response.data);
+      console.log("Login response:", login);
     } catch (error) {
       // Handle error
       console.error("Error logging in:", error);
@@ -34,7 +34,6 @@ const Login = () => {
       {/* Brand name section */}
       <div className="mr-5 w-1/2 p-8 rounded-l-lg shadow-md">
         <h1 className="text-3xl font-semibold mb-6">Bloggers Point</h1>
-  
       </div>
       {/* Login form section */}
       <form className="w-1/2 max-w-md p-8 bg-white rounded-r-lg shadow-md">

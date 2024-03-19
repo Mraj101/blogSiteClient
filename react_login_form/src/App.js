@@ -11,7 +11,7 @@ function App() {
   const {user} = useAuthContext(AuthContext)
   return (
     <Router>
-      {user?<Navbar/>:""}
+      <Navbar/>
       <Routes>
         <Route index element={<Home />} />
         <Route 
