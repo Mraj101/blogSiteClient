@@ -6,9 +6,7 @@ const HomeLayout = () => {
   return (
     <div>
       <Hero/>
-    <Home/>
-    
-    
+      <Home/>
     </div>
   )
 }

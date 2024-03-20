@@ -1,28 +1,21 @@
 import { useState } from "react";
 import axios from "axios"; // Import Axios
 import { UseLogin } from "../hooks/useLogin";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, isLoading, error } = UseLogin();
-  console.log(login)
+  const navigate= useNavigate()
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("submit");
     try {
-      
-      // Send login request
-      // const response = await axios.post(
-      //   "http://localhost:8000/api/v1/newuser/login",
-      //   {
-      //     email: email,
-      //     password: password
-      //   },
-      // );
-
-      // Handle response here, for example, you can log the response data
-      console.log("Login response:", login);
+        const res  = await login(email, password)
+        console.log("Login response:",res);
+        res.accessToken?navigate('/'):navigate('/login')
     } catch (error) {
       // Handle error
       console.error("Error logging in:", error);

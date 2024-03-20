@@ -12,20 +12,19 @@ export const UseLogin = () => {
   const { dispatch } = useAuthContext();
 
   console.log("before login");
+
   const login = async (email, password) => {
     setIsLoading(true);
     setError(null);
-
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/newuser/login",
         { email, password }
       );
       const user = response.data.data;
-
       dispatch({ type: "LOGIN", payload: user });
-
       setIsLoading(false);
+      return user;
     } catch (error) {
       setIsLoading(false);
       setError(error.response.data.error);

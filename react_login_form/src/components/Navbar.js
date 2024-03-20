@@ -1,21 +1,43 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
+  const [prevScrollPos, setPrevScrollPos] = useState(0);
+  const [visible, setVisible] = useState(true);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const currentScrollPos = window.pageYOffset;
+      const isVisible = prevScrollPos > currentScrollPos;
+
+      setPrevScrollPos(currentScrollPos);
+      setVisible(isVisible);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [prevScrollPos, visible]);
+
   return (
-    <div className="bg-purple-900 px-4 sm:px-6 lg:px-8 py-4" >
+    <div
+      className={`z-50 bg-white x-4 sm:px-6 lg:px-8 py-4 shadow-black shadow-sm sticky top-0 transition duration-500 ${
+        visible ? "" : "transform -translate-y-full"
+      }`}
+    >
       <div className="flex justify-between items-center">
         <div>
-          <Link to="/" className="text-white font-bold text-2xl">BLogs</Link>
+          <Link to="/" className=" font-bold text-2xl">
+            Blogs
+          </Link>
         </div>
         <div className="flex items-center space-x-4">
-          <Link to="/">
-            <button className="text-white">Home</button>
-          </Link>
           <Link to="/create">
-            <button className="text-white">Create Blog</button>
+            <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
+              Create Blog
+            </button>
           </Link>
-          <button className="text-white flex items-center space-x-2">
+          <button className=" flex items-center space-x-2">
             <span>Profile</span>
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -31,7 +53,7 @@ const Navbar = () => {
               />
             </svg>
           </button>
-          <button className="text-white">Logout</button>
+          <button>Logout</button>
         </div>
       </div>
     </div>

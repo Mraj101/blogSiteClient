@@ -30,11 +30,9 @@ const CreateBlog = () => {
     e.preventDefault();
     const formInstance = new FormData();
 
-
     formInstance.append("title", formData.title);
     formInstance.append("content", formData.content);
-    formInstance.append("img", formData.image); 
-
+    formInstance.append("img", formData.image);
 
     // console.log("FormData entries:");
     // const entries = [];
@@ -68,7 +66,7 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md">
+    <div className="w-[55%] mx-auto m-4 p-8 bg-gray-300 rounded-lg shadow-md">
       <h1 className="text-3xl font-semibold text-center mb-6">
         Create a New Blog
       </h1>

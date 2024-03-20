@@ -103,12 +103,13 @@ const SingleBlog = () => {
 
 
   const handleReplySubmit = async () => {
+    console.log("heelo reply")
     if (replyText.trim() !== "") {
       const updatedComments = [...comments];
       updatedComments[replyIndex].replies.push(replyText);
       try {   
-        const response = await axios.post(
-          "http://localhost:8000/api/v1/comments/update",
+        const response = await axios.put(
+          `http://localhost:8000/api/v1/comments/update/${id}`,
           updatedComments
         );
       } catch (error) {
