@@ -9,6 +9,8 @@ import SingleBlog from "./components/SingleBlog";
 import Login from "./pages/login";
 import HomeLayout from "./pages/HomeLayout";
 import Hero from "./pages/Hero";
+
+
 function App() {
   const {user} = useAuthContext(AuthContext)
   return (
@@ -21,7 +23,7 @@ function App() {
         element={<CreateBlogs />}
         /> 
         <Route 
-        path="/blog/:id"
+        path="/blogs/:id"
         element={<SingleBlog/>}
         />
         
@@ -29,6 +31,10 @@ function App() {
               path="/login" 
               element={<Login/>} 
             />
+        <Route 
+              path="/signup" 
+              element={<Signup/>} 
+        />
       </Routes>
     </Router>
   );

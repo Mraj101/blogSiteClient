@@ -21,10 +21,10 @@ const Home = () => {
 
   return (
     <>
-      <div className="flex w-full">
-        <div className="w-[70%] flex flex-col justify-center items-center">
+      <div className="flex w-full bg-gray-100">
+        <div className="w-[70%] flex flex-col justify-center items-center  bg-gray-300 shadow-lg">
           {blogs && (
-            <div className="container px-4 py-8">
+            <div className="container px-4 py-8 bg-cream">
               <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-2">
                 {blogs.map((blog, index) => (
                   <Blog
@@ -41,7 +41,7 @@ const Home = () => {
         </div>
 
         <div className="w-[30%]">
-          <div className="m-12 p-2 rounded-md sticky right-5 top-32 border border-black">
+          <div className="m-12 p-5 rounded-md sticky right-5 top-32 shadow-lg ">
             <h1 className="font-bold text-xl mb-4">Popular Blogs</h1>
             <div className="flex flex-col space-y-4">
               <div className="bg-gray-100 rounded-lg p-4">

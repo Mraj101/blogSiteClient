@@ -1,80 +1,82 @@
 import { useState } from "react";
-import axios from "axios"; // Import Axios
-import { UseLogin } from "../hooks/useLogin";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import { AiOutlineTwitter } from "react-icons/ai";
+import { BiLogoFacebook } from "react-icons/bi";
 
-const Login = () => {
+const Login = ({ login }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isLoading, error } = UseLogin();
-  const navigate= useNavigate()
-
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        const res  = await login(email, password)
-        console.log("Login response:",res);
-        res.accessToken?navigate('/'):navigate('/login')
+      const res = await login(email, password);
+      console.log("Login response:", res);
+      res.accessToken ? navigate("/") : navigate("/login");
     } catch (error) {
-      // Handle error
       console.error("Error logging in:", error);
     }
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-200 h-[570px]">
-      {/* Brand name section */}
-      <div className="mr-5 w-1/2 p-8 rounded-l-lg shadow-md">
-        <h1 className="text-3xl font-semibold mb-6">Bloggers Point</h1>
+    <section className="flex flex-col md:flex-row justify-center items-center my-2 mx-5 md:mx-0 md:my-0 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+      <div className="flex gap-40 justify-center items-center">
+      <div className="w-[40%]">
+        <img
+          src="https://tecdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.webp"
+          alt="Sample image"
+        />
       </div>
-      {/* Login form section */}
-      <form className="w-1/2 max-w-md p-8 bg-white rounded-r-lg shadow-md">
-        <h3 className="text-2xl font-semibold mb-6 text-center">Log In</h3>
-
-        <div className="mb-6">
-          <label
-            htmlFor="email"
-            className="block text-sm font-bold text-gray-700"
-          >
-            Email address:
-          </label>
+      <div className="w-[60%]">
+        <div className="text-center md:text-left mb-5 font-bold">
+          <label className="mr-1">Sign in with</label>
+        </div>
+       
+        <form onSubmit={handleSubmit}>
           <input
-            id="email"
-            className="w-full px-4 py-3 mt-2 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
-            type="email"
-            onChange={(e) => setEmail(e.target.value)}
+            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mb-4"
+            type="text"
+            placeholder="Email Address"
             value={email}
-            placeholder="Enter your email address"
+            onChange={(e) => setEmail(e.target.value)}
           />
-        </div>
-
-        <div className="mb-6">
-          <label
-            htmlFor="password"
-            className="block text-sm font-bold text-gray-700"
-          >
-            Password:
-          </label>
           <input
-            id="password"
-            className="w-full px-4 py-3 mt-2 text-lg border rounded-lg focus:outline-none focus:border-blue-500"
+            className="text-sm w-full px-4 py-2 border border-solid border-gray-300 rounded mb-4"
             type="password"
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Password"
             value={password}
-            placeholder="Enter your password"
+            onChange={(e) => setPassword(e.target.value)}
           />
+          <div className="flex justify-between items-center mb-4">
+            <label className="flex text-gray-500 cursor-pointer">
+              <input className="mr-1" type="checkbox" />
+              <span>Remember Me</span>
+            </label>
+            <a
+              className="text-blue-600 hover:text-blue-700 hover:underline hover:underline-offset-4"
+              href="#"
+            >
+              Forgot Password?
+            </a>
+          </div>
+          <button
+            className="w-full px-4 py-2 text-white bg-blue-600 rounded hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
+            type="submit"
+          >
+            Log In
+          </button>
+        </form>
+        <div className="mt-4 font-semibold text-sm text-gray-500">
+          Don't have an account?{" "}
+          <Link to={'/signup'}>
+            Register
+          </Link>
         </div>
+      </div>
 
-        <button
-          className="w-full px-4 py-3 mt-4 text-lg text-white bg-blue-500 rounded-lg hover:bg-blue-700 focus:outline-none focus:bg-blue-700"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          Log In
-        </button>
-      </form>
-    </div>
+      </div>
+    </section>
   );
 };
 

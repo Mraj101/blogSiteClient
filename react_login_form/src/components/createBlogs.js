@@ -34,14 +34,6 @@ const CreateBlog = () => {
     formInstance.append("content", formData.content);
     formInstance.append("img", formData.image);
 
-    // console.log("FormData entries:");
-    // const entries = [];
-    // for (const entry of formInstance.entries()) {
-    //   entries.push(entry);
-    // }
-    // console.log(...formInstance.entries());
-    // console.log(formInstance.entries(), "form entries");
-
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/blogs/crt",
@@ -52,13 +44,10 @@ const CreateBlog = () => {
           },
         }
       );
-      // console.log("Blog created successfully!", response.data);
-      // Reset form fields
       setFormData({
         title: "",
         content: "",
         imagePreview: "",
-        // imageLink: "",
       });
     } catch (error) {
       console.error("There was a problem creating the blog:", error);
@@ -66,89 +55,68 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="w-[55%] mx-auto m-4 p-8 bg-gray-300 rounded-lg shadow-md">
-      <h1 className="text-3xl font-semibold text-center mb-6">
-        Create a New Blog
-      </h1>
-      <form onSubmit={handleSubmit}>
-        {/* Form fields as before */}
-        <div className="mb-4">
-          <label htmlFor="title" className="block text-lg font-medium mb-2">
-            Blog Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            value={formData.title}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="content" className="block text-lg font-medium mb-2">
-            Blog Content
-          </label>
-          <textarea
-            id="content"
-            name="content"
-            value={formData.content}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
-            rows="6"
-            required
-          />
-        </div>
-        <div className="mb-4">
-          <label htmlFor="image" className="block text-lg font-medium mb-2">
-            Upload Image
-          </label>
-          <input
-            type="file"
-            id="image"
-            name="image"
-            accept="image/*"
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-400 rounded-md focus:border-blue-500"
-          />
-          {formData.imagePreview && (
-            <img
-              src={formData.imagePreview}
-              alt=" Preview"
-              className="mt-3 w-full rounded-md"
+    <div className="w-full h-full px-4 py-8 flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100">
+      <div className=" w-[55%] p-10 rounded-lg border border-gray-200 shadow-xl bg-white">
+        <h1 className="text-3xl font-semibold text-center mb-6">
+          Create a New Blog
+        </h1>
+        <form onSubmit={handleSubmit}>
+          <div className="mb-4">
+            <label htmlFor="title" className="block text-lg font-medium mb-2">
+              Blog Title
+            </label>
+            <input
+              type="text"
+              id="title"
+              name="title"
+              value={formData.title}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
+              required
             />
-          )}
-        </div>
-
-        {/* imgage link preview. */}
-        {/* <div className="mb-4">
-          <label htmlFor="imageLink" className="block text-lg font-medium mb-2">
-            paste your image link here
-          </label>
-          <input
-            type="text"
-            id="imageLink"
-            name="imageLink"
-            value={formData.imageLink}
-            onChange={handleChange}
-            className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
-          />
-          {formData.imageLink && !formData.imagePreview && (
-            <img
-              src={formData.imageLink}
-              alt="Image Preview"
-              className="mt-3 w-full rounded-md"
+          </div>
+          <div className="mb-4">
+            <label htmlFor="content" className="block text-lg font-medium mb-2">
+              Blog Content
+            </label>
+            <textarea
+              id="content"
+              name="content"
+              value={formData.content}
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-400 rounded-md focus:outline-none focus:border-blue-500"
+              rows="6"
+              required
             />
-          )}
-        </div> */}
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
-        >
-          Create Blog
-        </button>
-      </form>
+          </div>
+          <div className="mb-4">
+            <label htmlFor="image" className="block text-lg font-medium mb-2">
+              Upload Image
+            </label>
+            <input
+              type="file"
+              id="image"
+              name="image"
+              accept="image/*"
+              onChange={handleChange}
+              className="w-full px-4 py-2 border border-gray-400 rounded-md focus:border-blue-500"
+            />
+            {formData.imagePreview && (
+              <img
+                src={formData.imagePreview}
+                alt="Preview"
+                className="mt-3 w-full rounded-md"
+              />
+            )}
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white px-6 py-3 rounded-md hover:bg-blue-600 focus:outline-none focus:bg-blue-600"
+          >
+            Create Blog
+          </button>
+        </form>
+      </div>
     </div>
   );
 };

@@ -8,20 +8,23 @@ const Navbar = () => {
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
-      const isVisible = prevScrollPos > currentScrollPos;
-
+      let isVisible = prevScrollPos > currentScrollPos;
+      // console.log(prevScrollPos,"pos")
+      if (prevScrollPos < 40) isVisible = true;
       setPrevScrollPos(currentScrollPos);
       setVisible(isVisible);
+      // console.log(visible,"hi");
     };
 
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
+    console.log("unmount");
   }, [prevScrollPos, visible]);
 
   return (
     <div
-      className={`z-50 bg-white x-4 sm:px-6 lg:px-8 py-4 shadow-black shadow-sm sticky top-0 transition duration-500 ${
+      className={`z-50 h-20 bg-white x-4 sm:px-6 lg:px-8 py-4 shadow-lg sticky top-0 transition duration-500 ${
         visible ? "" : "transform -translate-y-full"
       }`}
     >
@@ -37,22 +40,13 @@ const Navbar = () => {
               Create Blog
             </button>
           </Link>
-          <button className=" flex items-center space-x-2">
-            <span>Profile</span>
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              className="w-6 h-6 bg-red-300 rounded-lg"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z"
-              />
-            </svg>
-          </button>
+          <div>
+            <img
+              className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-contain"
+              src="https://xsgames.co/randomusers/assets/avatars/male/63.jpg"
+              alt="no Image"
+            />
+          </div>
           <button>Logout</button>
         </div>
       </div>

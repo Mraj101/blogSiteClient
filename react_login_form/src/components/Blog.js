@@ -7,26 +7,36 @@ const Blog = ({ title, content, imageUrl, blogId }) => {
   const { user } = useAuthContext(AuthContext);
 
   return (
-    <div className="container mx-auto px-4 py-8 w-[60%]  ">
-      <div className="border border-gray-50 max-w-4xl mx-auto  shadow-lg rounded-lg overflow-hidden m-4 bg-gray-50">
-        <Link to={`/blog/${blogId}`}>
+    <div className="container px-20 my-3 w-full">
+      <div className="h-52 bg-white flex justify-between border border-gray-300 shadow-lg rounded-md p-4">
+        <div className="flex flex-col justify-between">
+          <div className="flex gap-2">
+            <img className="h-10 w-10 border border-black rounded-full" 
+            src="https://xsgames.co/randomusers/assets/avatars/male/63.jpg" 
+            alt="" />
+            <span className="mt-2">userName</span>
+          </div>
+          <div className="flex flex-col justify-between mr-8">
+            <h2 className="text-xl font-bold mb-5">{title?.toUpperCase()}</h2>
+            <p className="text-gray-600">{content}</p>
+          </div>
+          <div>
+            <Link
+              to={`/blogs/${blogId}`}
+              className=" text-lg text-blue-500 hover:underline mt-2"
+            >
+              Read more
+            </Link>
+          </div>
+        </div>
+
+        <div className="flex items-center">
           <img
             src={imageUrl}
-            alt="Blog Post Image"
-            className="w-full h-[300px] object-contain hover:scale-105 transition duration-300 ease-in-out"
+            alt={title}
+            className="w-32 h-32 object-cover rounded-md"
           />
-        </Link>
-        <div className="p-6 bg-blue-300">
-          <h2 className="text-3xl font-semibold mb-4">Title: {title}</h2>
-          <p className="text-gray-700 leading-relaxed break-words">
-            Content: {content}
-          </p>
         </div>
-        <Link to={`/blog/${blogId}`}>
-          <div className="text-center bg-red-300 hover:bg-red-500 transition duration-300 ease-in-out transform hover:scale-105 py-2 rounded-md">
-            Read more
-          </div>
-        </Link>
       </div>
     </div>
   );
