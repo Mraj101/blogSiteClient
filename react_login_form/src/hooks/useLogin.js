@@ -9,7 +9,7 @@ export const UseLogin = () => {
   const [isLoading, setIsLoading] = useState(false);
   console.log("hi");
 
-  const { dispatch } = useAuthContext();
+  const { dispatch, setUsr } = useAuthContext();
 
   console.log("before login");
 
@@ -22,7 +22,10 @@ export const UseLogin = () => {
         { email, password }
       );
       const user = response.data.data;
-      dispatch({ type: "LOGIN", payload: user });
+      if(user){
+        setUsr(user);
+      }
+      // dispatch({ type: "LOGIN", payload: user });
       setIsLoading(false);
       return user;
     } catch (error) {

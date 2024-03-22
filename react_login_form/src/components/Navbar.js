@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
+  const { usr, setUsr } = useAuthContext();
+  console.log(usr, "+consoled user");
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,12 +18,20 @@ const Navbar = () => {
       setVisible(isVisible);
       // console.log(visible,"hi");
     };
-
     window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
     console.log("unmount");
   }, [prevScrollPos, visible]);
+
+  
+  useEffect(() => {
+    if (localStorage.getItem("user", JSON.parse(usr))) {
+      const locaStoredUser = localStorage.getItem("user", JSON.parse(usr));
+      // console.log(locaStoredUser,"stored user")
+      setUsr(locaStoredUser);
+    }
+  }, []);
 
   return (
     <div
@@ -41,13 +52,16 @@ const Navbar = () => {
             </button>
           </Link>
           <div>
+            <button className=" font-thin">Sing In</button>
+          </div>
+          <div>
             <img
               className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-contain"
               src="https://xsgames.co/randomusers/assets/avatars/male/63.jpg"
               alt="no Image"
             />
           </div>
-          <button>Logout</button>
+          <button className="font-thin">Logout</button>
         </div>
       </div>
     </div>
