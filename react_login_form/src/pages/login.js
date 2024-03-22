@@ -16,8 +16,6 @@ const Login = () => {
       {
         localStorage.setItem('user',JSON.stringify(res))
       }
-      console.log("Login response:", res);
-      res.accessToken ? navigate("/") : navigate("/login");
     } catch (error) {
       console.error("Error logging in:", error);
     }

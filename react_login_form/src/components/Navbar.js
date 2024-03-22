@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
+import { useLogout } from "../hooks/useLogOut";
 
 const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { usr, setUsr } = useAuthContext();
+  const { logout } = useLogout();
   console.log(usr, "+consoled user");
 
   useEffect(() => {
@@ -33,6 +35,12 @@ const Navbar = () => {
     }
   }, []);
 
+
+  //logout
+  const handleLogout= async()=>{
+    await logout()
+  }
+
   return (
     <div
       className={`z-50 h-20 bg-white x-4 sm:px-6 lg:px-8 py-4 shadow-lg sticky top-0 transition duration-500 ${
@@ -54,6 +62,7 @@ const Navbar = () => {
           <div>
             <button className=" font-thin">Sing In</button>
           </div>
+          <Link to="userProfile">
           <div>
             <img
               className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-contain"
@@ -61,7 +70,9 @@ const Navbar = () => {
               alt="no Image"
             />
           </div>
-          <button className="font-thin">Logout</button>
+          </Link>
+         
+          <button onClick={handleLogout} className="font-thin">Logout</button>
         </div>
       </div>
     </div>

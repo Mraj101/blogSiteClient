@@ -10,12 +10,14 @@ import Login from "./pages/login";
 import HomeLayout from "./pages/HomeLayout";
 import Hero from "./pages/Hero";
 import Layout from "./components/Layout";
+import RequireAuth from "./components/RequireAuth";
+import UserProfile from "./components/userProfile";
 function App() {
   const { user } = useAuthContext(AuthContext);
 
   return (
     <>
-    <Navbar/>
+      <Navbar />
       <Routes>
         <Route path="/" element={<Layout />}>
           {/* public routes */}
@@ -24,8 +26,11 @@ function App() {
           <Route index element={<HomeLayout />} />
 
           {/* routes to be protected */}
-          <Route path="/create" element={<CreateBlogs />} />
-          <Route path="/blogs/:id" element={<SingleBlog />} />
+          <Route element={<RequireAuth/>}>
+            <Route path="/create" element={<CreateBlogs />} />
+            <Route path="/blogs/:id" element={<SingleBlog />} />
+            <Route path="/userProfile" element={<UserProfile/>} />
+          </Route>
 
           {/* call all */}
           {/* <Route path="*" element={<Missing />} /> */}
