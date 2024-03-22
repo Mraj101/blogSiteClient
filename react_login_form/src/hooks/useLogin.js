@@ -20,13 +20,11 @@ export const UseLogin = () => {
       const response = await axios.post(
         "http://localhost:8000/api/v1/newuser/login",
         { email, password },
-  
       );
       const user = response.data.data;
       if (user) {
         setUsr(user);
       }
-      // dispatch({ type: "LOGIN", payload: user });
       setIsLoading(false);
       return user;
     } catch (error) {
