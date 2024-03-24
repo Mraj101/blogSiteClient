@@ -8,7 +8,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const { usr, setUsr } = useAuthContext();
   const { logout } = useLogout();
-  console.log(usr, "+consoled user");
+  // console.log(usr, "+consoled user");
 
   useEffect(() => {
     const handleScroll = () => {
