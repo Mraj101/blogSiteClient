@@ -2,22 +2,43 @@ import React, { useState, useEffect } from "react";
 import Blog from "../components/Blog";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
+  const { usr, setUsr } = useAuthContext();
 
   useEffect(() => {
-    axios
-      .get("http://localhost:8000/api/v1/blogs/get")
-      .then((response) => {
-        const { data } = response.data;
-        setBlogs(data);
-        console.log(data, "react kahini");
-      })
-      .catch((error) => {
-        console.error("Error fetching blogs:", error);
-      });
+    const userDataFromStorage = JSON.parse(localStorage.getItem("user"));
+    if (userDataFromStorage) setUsr(userDataFromStorage);
   }, []);
+
+
+ useEffect(() => {
+    if (usr) {
+      axios
+        .post("http://localhost:8000/api/v1/blogs/get", usr)
+        .then((response) => {
+          const { data } = response.data;
+          setBlogs(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching blogs:", error);
+        });
+    } else {
+      axios
+        .get("http://localhost:8000/api/v1/blogs/getAll")
+        .then((response) => {
+          const { data } = response.data;
+          setBlogs(data);
+        })
+        .catch((error) => {
+          console.error("Error fetching blogs:", error);
+        });
+    }
+  }, [usr]);
+
+  console.log(blogs, "blogs are here");
 
   return (
     <>
@@ -25,7 +46,7 @@ const Home = () => {
         <div className="w-[70%] flex flex-col justify-center items-center  bg-gray-100 shadow-lg">
           {blogs && (
             <div className="container px-4 py-8 bg-cream">
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-1 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-1">
                 {blogs.map((blog, index) => (
                   <Blog
                     key={index}
@@ -33,6 +54,9 @@ const Home = () => {
                     content={blog.content}
                     imageUrl={blog.img}
                     blogId={blog._id}
+                    userImage={blog.userImage}
+                    userName={blog.userName}
+                    createdAt={ blog.createdAt }
                   />
                 ))}
               </div>

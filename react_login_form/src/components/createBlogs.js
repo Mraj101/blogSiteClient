@@ -1,7 +1,9 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const CreateBlog = () => {
+  const { usr , setUsr } = useAuthContext()
   const [formData, setFormData] = useState({
     title: "",
     content: "",
@@ -9,6 +11,11 @@ const CreateBlog = () => {
     imagePreview: null,
     imageLink: "",
   });
+
+    useEffect(() => {
+      const userDataFromStorage = JSON.parse(localStorage.getItem('user'));
+      setUsr(userDataFromStorage);
+    }, []);  
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -27,13 +34,18 @@ const CreateBlog = () => {
   };
 
   const handleSubmit = async (e) => {
+    console.log('hit');
     e.preventDefault();
     const formInstance = new FormData();
 
     formInstance.append("title", formData.title);
     formInstance.append("content", formData.content);
     formInstance.append("img", formData.image);
+    formInstance.append('user',usr._id)
 
+    console.log(formInstance.entries()[0],"form instance")
+
+    
     try {
       const response = await axios.post(
         "http://localhost:8000/api/v1/blogs/crt",
@@ -44,6 +56,7 @@ const CreateBlog = () => {
           },
         }
       );
+      console.log(response,"new");
       setFormData({
         title: "",
         content: "",
@@ -55,13 +68,13 @@ const CreateBlog = () => {
   };
 
   return (
-    <div className="w-full h-full px-4 py-8 flex items-center justify-center absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-gray-100">
-      <div className=" w-[55%] p-10 rounded-lg border border-gray-200 shadow-xl bg-white">
-        <h1 className="text-3xl font-semibold text-center mb-6">
+    <div className="w-full px-4 py-8 flex items-center justify-center">
+      <div className="max-w-xl w-full p-5 rounded-lg border border-gray-200 shadow-xl bg-white overflow-y-auto">
+        <h1 className="text-3xl font-semibold text-center mb-2">
           Create a New Blog
         </h1>
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-2">
             <label htmlFor="title" className="block text-lg font-medium mb-2">
               Blog Title
             </label>
@@ -89,7 +102,7 @@ const CreateBlog = () => {
               required
             />
           </div>
-          <div className="mb-4">
+          <div className=" md:mb-2 lg:mb-2 xl:mb-2">
             <label htmlFor="image" className="block text-lg font-medium mb-2">
               Upload Image
             </label>
@@ -105,7 +118,7 @@ const CreateBlog = () => {
               <img
                 src={formData.imagePreview}
                 alt="Preview"
-                className="mt-3 w-full rounded-md"
+                className="mt-1 w-full rounded-md"
               />
             )}
           </div>
@@ -116,6 +129,7 @@ const CreateBlog = () => {
             Create Blog
           </button>
         </form>
+        
       </div>
     </div>
   );

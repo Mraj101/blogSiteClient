@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogOut";
-
+import Signup from "../pages/signup";
 const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
@@ -26,20 +26,17 @@ const Navbar = () => {
     console.log("unmount");
   }, [prevScrollPos, visible]);
 
-  
   useEffect(() => {
-    if (localStorage.getItem("user", JSON.parse(usr))) {
-      const locaStoredUser = localStorage.getItem("user", JSON.parse(usr));
-      // console.log(locaStoredUser,"stored user")
-      setUsr(locaStoredUser);
+    const stored = JSON.parse(localStorage.getItem("user"));
+    if (stored) {
+      setUsr(stored);
     }
   }, []);
 
-
   //logout
-  const handleLogout= async()=>{
-    await logout()
-  }
+  const handleLogout = async () => {
+    await logout();
+  };
 
   return (
     <div
@@ -48,31 +45,60 @@ const Navbar = () => {
       }`}
     >
       <div className="flex justify-between items-center">
-        <div>
-          <Link to="/" className=" font-bold text-2xl">
-            Blogs
-          </Link>
-        </div>
+        <Link to="/">
+          <div className=" font-bold text-2xl">Blogs</div>
+        </Link>
+
         <div className="flex items-center space-x-4">
-          <Link to="/create">
-            <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
-              Create Blog
-            </button>
-          </Link>
-          <div>
-            <button className=" font-thin">Sing In</button>
-          </div>
+          {usr && (
+            <Link to="/create">
+              <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
+                Create Blog
+              </button>
+            </Link>
+          )}
+
+          {usr ? (
+            ""
+          ) : (
+            <Link to="/login">
+              <div>
+                <button className=" font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
+                  Login
+                </button>
+              </div>
+            </Link>
+          )}
+
+          {usr ? (
+            ""
+          ) : (
+            <Link to="/signup">
+              <div>
+                <button className=" font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
+                  Sign up
+                </button>
+              </div>
+            </Link>
+          )}
+
           <Link to="userProfile">
-          <div>
-            <img
-              className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-contain"
-              src="https://xsgames.co/randomusers/assets/avatars/male/63.jpg"
-              alt="no Image"
-            />
-          </div>
+            <div>
+              {usr && (
+                <img
+                  className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-cover"
+                  src={usr.img}
+                  alt="no Image"
+                />
+              )}
+            </div>
           </Link>
-         
-          <button onClick={handleLogout} className="font-thin">Logout</button>
+
+          {usr && (
+            <button onClick={handleLogout} className="font-thin border border-gray-200 p-2 rounded-lg shadow-md">
+              Logout
+            </button>
+          )}
         </div>
       </div>
     </div>

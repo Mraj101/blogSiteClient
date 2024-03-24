@@ -1,16 +1,34 @@
+import { useEffect } from 'react';
 import { useAuthContext } from './useAuthContext';
 import axios from 'axios';
 
 export const useLogout = () => {
-  const { setUsr } = useAuthContext();
+  const { setUsr,usr } = useAuthContext();
+
+  // useEffect(()=>{
+  //   const stored = JSON.parse(localStorage.getItem('user'));
+  //   if(stored){
+  //     console.log('getting Imtem');
+  //     setUsr(stored)
+  //   }
+  //   },[])
 
   const logout = async () => {
     try {
-      console.log("iniside log out");
-      const response = await axios.post('http://localhost:8000/api/v1/newuser/logout');
-      console.log(response,"logged out successfull");
-      localStorage.removeItem('user');
-      setUsr(null);
+      const response = await axios.post(
+        'http://localhost:8000/api/v1/newuser/logout',
+        null, // No data payload for logout request
+        {
+          withCredentials: true, // Ensure credentials are sent with the request
+          headers: {
+            'Authorization': `Bearer ${usr.accessToken}` // Include authorization token
+          }
+        }
+      );
+      console.log(response, "logged out successfully");
+      const Removed=localStorage.removeItem('user');
+      if(Removed===null)
+            setUsr(null);
     } catch (error) {
       console.error('Error logging out:', error);
     }
