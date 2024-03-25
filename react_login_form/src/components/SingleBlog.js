@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const SingleBlog = () => {
   const [blog, setBlog] = useState(null);
@@ -8,8 +9,15 @@ const SingleBlog = () => {
   const [commentInput, setCommentInput] = useState("");
   const [replyIndex, setReplyIndex] = useState(null);
   const [replyText, setReplyText] = useState("");
-
   const { id } = useParams();
+
+  // const {usr,setUsr} = useAuthContext()
+  // useEffect(()=>{
+  //   const stored = JSON.parse(localStorage.getItem('user');
+  //   if(stored){
+  //     setUsr(stored)
+  //   }
+  // })
 
   useEffect(() => {
     const fetchBlog = async () => {
@@ -88,12 +96,14 @@ const SingleBlog = () => {
     <div className="container mx-auto px-4 py-8 w-[80%]">
       <div className="flex items-center mb-4">
         <img
-          src="https://xsgames.co/randomusers/assets/avatars/male/63.jpg"
+          src={blog.data.userImg}
           alt="User Avatar"
-          className="w-12 h-12 rounded-full mr-4"
+          className="w-12 h-12 rounded-full mr-4 object-cover"
         />
         <div>
-          <p className="text-lg font-semibold">Name</p>
+          <p className="text-lg font-semibold underline">
+            {blog.data.username}
+          </p>
           {/* Assuming the user's name is available in user.name */}
         </div>
       </div>

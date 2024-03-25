@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogOut";
 import Signup from "../pages/signup";
@@ -8,6 +8,7 @@ const Navbar = () => {
   const [visible, setVisible] = useState(true);
   const { usr, setUsr } = useAuthContext();
   const { logout } = useLogout();
+  const navigate = useNavigate()
   // console.log(usr, "+consoled user");
 
   useEffect(() => {
@@ -21,9 +22,8 @@ const Navbar = () => {
       // console.log(visible,"hi");
     };
     window.addEventListener("scroll", handleScroll);
-
     return () => window.removeEventListener("scroll", handleScroll);
-    console.log("unmount");
+    // console.log("unmount");
   }, [prevScrollPos, visible]);
 
   useEffect(() => {
@@ -33,10 +33,13 @@ const Navbar = () => {
     }
   }, []);
 
+
   //logout
   const handleLogout = async () => {
     await logout();
+    window.location.reload();
   };
+  
 
   return (
     <div

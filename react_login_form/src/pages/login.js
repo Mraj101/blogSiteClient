@@ -6,20 +6,19 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
-  const { login, isLoading, error }= UseLogin();
+  const { login, isLoading, error } = UseLogin();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const res = await login(email, password);
-      if(res)
-      {
-        localStorage.setItem('user',JSON.stringify(res))
+      if (res) {
+        const user = localStorage.setItem("user", JSON.stringify(res));
+        navigate('/');
       }
     } catch (error) {
       console.error("Error logging in:", error);
     }
-    navigate('/')
   };
 
   return (

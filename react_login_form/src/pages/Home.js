@@ -4,6 +4,7 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 
+
 const Home = () => {
   const [blogs, setBlogs] = useState([]);
   const { usr, setUsr } = useAuthContext();

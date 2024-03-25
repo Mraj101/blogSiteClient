@@ -1,10 +1,11 @@
 import { useEffect } from "react";
 import { useAuthContext } from "./useAuthContext";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export const useLogout = () => {
   const { setUsr, usr } = useAuthContext();
-
+  const navigate = useNavigate();
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("user"));
     if (stored) {
@@ -15,17 +16,17 @@ export const useLogout = () => {
 
   const logout = async () => {
     try {
-      const response = await axios.post(
-        "http://localhost:8000/api/v1/newuser/logout",
-        null, // No data payload for logout request
-        {
-          withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${usr.accessToken}`,
-          },
-        }
-      );
-      console.log(response, "logged out successfully");
+      // const response = await axios.post(
+      //   "http://localhost:8000/api/v1/newuser/logout",
+      //   null, // No data payload for logout request
+      //   {
+      //     withCredentials: true,
+      //     headers: {
+      //       Authorization: `Bearer ${usr.accessToken}`,
+      //     },
+      //   }
+      // );
+      // console.log(response, "logged out successfully");
       const Removed = localStorage.removeItem("user");
       if (Removed === null) setUsr(null);
     } catch (error) {
