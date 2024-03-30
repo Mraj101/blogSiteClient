@@ -15,43 +15,53 @@ const Home = () => {
     if (userDataFromStorage) setUsr(userDataFromStorage);
   }, []);
 
-  useEffect(() => {
-    if (usr) {
-      axios
-        .post("http://localhost:8000/api/v1/blogs/get", usr)
-        .then((response) => {
-          const { data } = response.data;
-          setBlogs(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching blogs:", error);
-        });
-    } else {
-      axios
-        .get("http://localhost:8000/api/v1/blogs/getAll")
-        .then((response) => {
-          const { data } = response.data;
-          setBlogs(data);
-          setLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching blogs:", error);
-        });
-    }
-
-    // Fetch popular blogs
+  const fetchAllBLogs =async()=>{
     axios
-      .get("http://localhost:8000/api/v1/viewcount/getAll")
-      .then((response) => {
-        setPopularBlogs(response.data.data);
-      })
-      .catch((error) => {
-        console.error("Error fetching popular blogs:", error);
-      });
-  }, [usr]);
+    .get("http://localhost:8000/api/v1/blogs/getAll")
+    .then((response) => {
+      const { data } = response.data;
+      setBlogs(data);
+      setLoading(false);
+    })
+    .catch((error) => {
+      console.error("Error fetching blogs:", error);
+    })
+  }
 
-  console.log(popularBlogs,"here is the pop blogs")
+  const popularBLogs=async()=>{
+     // Fetch popular blogs
+     axios
+     .get("http://localhost:8000/api/v1/viewcount/getAll")
+     .then((response) => {
+       const { data } = response.data;
+       setPopularBlogs(data);
+       setLoading(false);
+     })
+     .catch((error) => {
+       console.error("Error fetching popular blogs:", error);
+     });
+     
+  }
+
+  useEffect(() => {
+    // if (usr) {
+    //   axios
+    //     .post("http://localhost:8000/api/v1/blogs/get", usr)
+    //     .then((response) => {
+    //       const { data } = response.data;
+    //       setBlogs(data);
+    //       setLoading(false);
+    //     })
+    //     .catch((error) => {
+    //       console.error("Error fetching blogs:", error);
+    //     });
+    // } else {}
+    //  ;
+    fetchAllBLogs();
+    popularBLogs();
+  }, []);
+
+  console.log(popularBlogs.map((Singleblog,key)=>console.log(Singleblog)),"here is the pop blogs")
 
   return (
     <>
@@ -93,8 +103,13 @@ const Home = () => {
               <div className="flex flex-col space-y-4">
                 {popularBlogs.map((Singleblog,key) => (
                   <div key={key} className="bg-gray-50 rounded-lg p-4 shadow-md border">
-                    <h2 className="text-lg font-semibold">{Singleblog.title}</h2>
-                    <p className="text-gray-600">{Singleblog.content}</p>
+                    {console.log(Singleblog.title)}
+                    <h2 className="text-lg font-semibold">Title:{Singleblog.title}</h2>
+                    <p className="text-gray-600">Content:{Singleblog.content.substr(0,30)}</p>
+                    <div className="flex relative">
+                    <img className="h-16 w-16 object-cover rounded-lg " src={Singleblog.img} alt="img" />
+                    <button className=" bg-gray-400 rounded-lg h-8 px-1 absolute right-8 top-5 text-white">Read More</button>
+                    </div>
                   </div>
                 ))}
               </div>
