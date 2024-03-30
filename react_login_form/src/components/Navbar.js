@@ -36,8 +36,12 @@ const Navbar = () => {
 
   //logout
   const handleLogout = async () => {
+  try {
     await logout();
-    window.location.reload();
+  } catch (error) {
+    console.log("eror loging out",error)
+  }
+  // window.location.reload();
   };
   
 

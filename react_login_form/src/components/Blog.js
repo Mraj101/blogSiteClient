@@ -34,7 +34,7 @@ const Blog = ({
 
           <div className="flex flex-col justify-between mr-8">
             <h2 className="text-xl font-bold mb-5">{title?.toUpperCase()}</h2>
-            <p className="text-gray-600">{content}</p>
+            <p className="text-gray-600">  {content.length > 200 ? `${content.substring(0, 200)}...` : content}</p>
           </div>
           <div>
             <Link
