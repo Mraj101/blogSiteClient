@@ -9,37 +9,39 @@ const SingleBlog = () => {
   const [commentInput, setCommentInput] = useState("");
   const [replyIndex, setReplyIndex] = useState(null);
   const [replyText, setReplyText] = useState("");
+  const { usr, setUsr } = useAuthContext();
   const { id } = useParams();
 
-  // const {usr,setUsr} = useAuthContext()
-  // useEffect(()=>{
-  //   const stored = JSON.parse(localStorage.getItem('user');
-  //   if(stored){
-  //     setUsr(stored)
-  //   }
-  // })
+  const fetchBlog = async () => {
+    try {
+      const blogResponse = await axios.get(
+        `http://localhost:8000/api/v1/blogs/getSingle/${id}`
+      );
+      setBlog(blogResponse.data);
+
+      const commentsResponse = await axios.get(
+        `http://localhost:8000/api/v1/comments/getComments/${id}`
+      );
+      setComments(commentsResponse.data.data);
+    } catch (error) {
+      console.error("Error fetching blog:", error);
+    }
+  };
+
+  // useEffect(() => {
+
+  // });
 
   useEffect(() => {
-    const fetchBlog = async () => {
-      try {
-        const blogResponse = await axios.get(
-          `http://localhost:8000/api/v1/blogs/getSingle/${id}`
-        );
-        setBlog(blogResponse.data);
-
-        const commentsResponse = await axios.get(
-          `http://localhost:8000/api/v1/comments/getComments/${id}`
-        );
-        setComments(commentsResponse.data.data);
-      } catch (error) {
-        console.error("Error fetching blog:", error);
-      }
-    };
-
+    const stored = JSON.parse(localStorage.getItem("user"));
+    if (stored) {
+      setUsr(stored);
+    }
     fetchBlog();
   }, []);
 
   const handleCommentChange = (event) => {
+    console.log("handle");
     setCommentInput(event.target.value);
   };
 
@@ -48,6 +50,7 @@ const SingleBlog = () => {
       if (commentInput.trim() !== "") {
         const commentData = {
           blogId: id,
+          user: usr._id,
           comment: commentInput,
           replies: [],
         };
@@ -139,8 +142,20 @@ const SingleBlog = () => {
         <ul>
           {comments.map((comment, index) => (
             <li key={index} className="mb-4">
-              <div className="flex justify-between">
-                <p className="text-black">{comment.comment}</p>
+              <div className="flex justify-between relative">
+                <div className="flex gap-5">
+                  <div>
+                    <img
+                      className="h-8 w-8 object-cover rounded-full "
+                      src={comment.userImg}
+                      alt="no photo"
+                    />
+                    <span className=" underline">{comment.userName}</span>
+                  </div>
+                  <p className="text-black absolute top-1 left-10">
+                    {comment.comment}
+                  </p>
+                </div>
                 <button
                   className="text-blue-500"
                   onClick={() => handleReply(index)}

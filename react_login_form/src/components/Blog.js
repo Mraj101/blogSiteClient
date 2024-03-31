@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/AuthProvider";
 import { useAuthContext } from "../hooks/useAuthContext";
+import axios from "axios";
 
 const Blog = ({
   title,
@@ -11,6 +12,7 @@ const Blog = ({
   userImage,
   userName,
   createdAt,
+  count,
 }) => {
   const { usr, setUsr } = useAuthContext(AuthContext);
 
@@ -19,9 +21,10 @@ const Blog = ({
     setUsr(userDataFromStorage);
   }, []);
 
+
   return (
     <div className="container px-20 my-3 w-full">
-      <div className="h-72 w-32 md:w-auto  bg-white flex justify-between border border-gray-300 shadow-lg rounded-md p-4">
+      <div className="h-64 w-32 md:w-auto  bg-white flex justify-between border border-gray-300 shadow-lg rounded-md p-4">
         <div className="flex flex-col justify-between ">
           <div className="flex gap-2">
             <img
@@ -54,7 +57,7 @@ const Blog = ({
               viewBox="0 0 24 24"
               stroke-width="1.5"
               stroke="currentColor"
-              class="w-5 h-5 absolute left-32 top-3"
+              class="w-5 h-5 absolute left-32 top-3 text-gray-500"
             >
               <path
                 stroke-linecap="round"
@@ -67,6 +70,9 @@ const Blog = ({
                 d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
               />
             </svg>
+            <span className="absolute left-[150px] top-2 text-gray-500">
+              {count}
+            </span>
           </div>
         </div>
 
