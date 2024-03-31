@@ -11,13 +11,7 @@ const SingleBlog = () => {
   const [replyText, setReplyText] = useState("");
   const { id } = useParams();
 
-  // const {usr,setUsr} = useAuthContext()
-  // useEffect(()=>{
-  //   const stored = JSON.parse(localStorage.getItem('user');
-  //   if(stored){
-  //     setUsr(stored)
-  //   }
-  // })
+
 
   useEffect(() => {
     const fetchBlog = async () => {

@@ -47,11 +47,11 @@ const Navbar = () => {
 
   return (
     <div
-      className={`z-50 h-20 bg-white x-4 sm:px-6 lg:px-8 py-4 shadow-lg sticky top-0 transition duration-500 ${
+      className={`z-50 h-18 bg-white px-4  lg:px-8 py-4 shadow-lg sticky top-0 transition duration-500 ${
         visible ? "" : "transform -translate-y-full"
       }`}
     >
-      <div className="flex justify-between items-center">
+      <div className="flex lg:justify-between md:justify-between gap-5 items-center">
         <Link to="/">
           <div className=" font-bold text-2xl">Blogs</div>
         </Link>
@@ -59,7 +59,7 @@ const Navbar = () => {
         <div className="flex items-center space-x-4">
           {usr && (
             <Link to="/create">
-              <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
+              <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400 hover:text-blue-600">
                 Create Blog
               </button>
             </Link>

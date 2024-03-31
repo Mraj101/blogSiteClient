@@ -21,7 +21,7 @@ const Blog = ({
 
   return (
     <div className="container px-20 my-3 w-full">
-      <div className="h-72 w-32 md:w-auto  bg-white flex justify-between border border-gray-300 shadow-lg rounded-md p-4">
+  <div className="h-auto overflow-hidden md:h-72 w-auto bg-white lg:flex lg:flex-row grid grid-cols-2 justify-between border-gray-300 shadow-lg rounded-md p-4">
         <div className="flex flex-col justify-between ">
           <div className="flex gap-2">
             <img
@@ -68,17 +68,20 @@ const Blog = ({
               />
             </svg>
           </div>
-        </div>
-
-        <div className="flex flex-col justify-between items-center">
-          <div>
+          <div className="">
             Blog Created:<span>{createdAt.split("T")[0]}</span>
           </div>
+        </div>
+
+        <div className=" lg:flex lg:justify-end items-center m-auto">
+          <div className="w-[30%]">
+
           <img
             src={imageUrl}
             alt={title}
-            className="w-32 h-32 object-cover rounded-md"
+            className=" object-cover rounded-md"
           />
+          </div>
         </div>
       </div>
     </div>

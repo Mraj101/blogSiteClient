@@ -74,8 +74,8 @@ const Home = () => {
           {/* Your loading animation */}
         </div>
       ) : (
-        <div className="flex w-full">
-          <div className="w-[70%] flex flex-col justify-center items-center  bg-gray-100 shadow-lg">
+        <div className="lg:flex md:flex grid w-full">
+          <div className=" flex flex-col justify-center items-center  bg-gray-100 shadow-lg">
             {blogs && (
               <div className="container px-4 py-8 bg-cream">
                 <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-1 gap-1">
@@ -97,7 +97,7 @@ const Home = () => {
           </div>
 
           {/* popular blog section */}
-          <div className="w-[30%] bg-gray-50">
+          <div className=" bg-gray-50">
             <div className="m-12 p-5 rounded-md sticky right-5 top-32 shadow-lg border border-gray-200 ">
               <h1 className="font-bold text-xl mb-4">Popular Blogs</h1>
               <div className="flex flex-col space-y-4">
