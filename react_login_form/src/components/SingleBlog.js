@@ -28,9 +28,9 @@ const SingleBlog = () => {
     }
   };
 
-  // useEffect(() => {
+            // useEffect(() => {
 
-  // });
+            // });
 
   useEffect(() => {
     const stored = JSON.parse(localStorage.getItem("user"));
