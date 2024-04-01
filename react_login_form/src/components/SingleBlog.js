@@ -23,6 +23,10 @@ const SingleBlog = () => {
         `http://localhost:8000/api/v1/comments/getComments/${id}`
       );
       setComments(commentsResponse.data.data);
+
+      const views= await axios.post(`http://localhost:8000/api/v1/viewcount/update/${id}`,{
+        loggedInUser:usr._id,
+      })
     } catch (error) {
       console.error("Error fetching blog:", error);
     }
@@ -115,7 +119,7 @@ const SingleBlog = () => {
 
       <img
         src={blog.data.img}
-        alt="Blog Post Image"
+        alt=""
         className="w-full h-[500px] object-cover rounded-lg mb-4"
       />
 
@@ -148,7 +152,7 @@ const SingleBlog = () => {
                     <img
                       className="h-8 w-8 object-cover rounded-full "
                       src={comment.userImg}
-                      alt="no photo"
+                      alt=""
                     />
                     <span className=" underline">{comment.userName}</span>
                   </div>
