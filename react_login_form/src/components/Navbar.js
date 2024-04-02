@@ -2,28 +2,24 @@ import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useAuthContext } from "../hooks/useAuthContext";
 import { useLogout } from "../hooks/useLogOut";
-import Signup from "../pages/signup";
+
 const Navbar = () => {
   const [prevScrollPos, setPrevScrollPos] = useState(0);
   const [visible, setVisible] = useState(true);
   const { usr, setUsr } = useAuthContext();
   const { logout } = useLogout();
-  const navigate = useNavigate()
-  // console.log(usr, "+consoled user");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const handleScroll = () => {
       const currentScrollPos = window.pageYOffset;
       let isVisible = prevScrollPos > currentScrollPos;
-      // console.log(prevScrollPos,"pos")
       if (prevScrollPos < 40) isVisible = true;
       setPrevScrollPos(currentScrollPos);
       setVisible(isVisible);
-      // console.log(visible,"hi");
     };
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
-    // console.log("unmount");
   }, [prevScrollPos, visible]);
 
   useEffect(() => {
@@ -33,17 +29,14 @@ const Navbar = () => {
     }
   }, []);
 
-
-  //logout
+  // Logout
   const handleLogout = async () => {
-  try {
-    await logout();
-  } catch (error) {
-    console.log("eror loging out",error)
-  }
-  // window.location.reload();
+    try {
+      await logout();
+    } catch (error) {
+      console.log("Error logging out", error);
+    }
   };
-  
 
   return (
     <div
@@ -52,11 +45,20 @@ const Navbar = () => {
       }`}
     >
       <div className="flex justify-between items-center">
+        {/* Brand Logo */}
         <Link to="/">
-          <div className=" font-bold text-2xl">Blogs</div>
+          <div className="font-bold text-2xl">Blogs</div>
         </Link>
 
         <div className="flex items-center space-x-4">
+          {/* Home Button */}
+          <Link to="/">
+            <button className="border-2 border-blue-400 rounded-md p-1 text-blue-400 ">
+              Home
+            </button>
+          </Link>
+
+          {/* Create Blog Button */}
           {usr && (
             <Link to="/create">
               <button className="border-2 border-blue-300 rounded-md p-1 text-blue-400">
@@ -65,44 +67,47 @@ const Navbar = () => {
             </Link>
           )}
 
-          {usr ? (
-            ""
-          ) : (
+          {/* Login Button */}
+          {!usr && (
             <Link to="/login">
               <div>
-                <button className=" font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
+                <button className="font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
                   Login
                 </button>
               </div>
             </Link>
           )}
 
-          {usr ? (
-            ""
-          ) : (
+          {/* Signup Button */}
+          {!usr && (
             <Link to="/signup">
               <div>
-                <button className=" font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
+                <button className="font-semibold border border-gray-200 p-2 rounded-lg shadow-md">
                   Sign up
                 </button>
               </div>
             </Link>
           )}
 
-          <Link to="userProfile">
-            <div>
-              {usr && (
+          {/* User Profile */}
+          {usr && (
+            <Link to="userProfile">
+              <div>
                 <img
                   className="h-10 w-10 shadow-lg border border-gray-300 rounded-full object-cover"
                   src={usr.img}
-                  alt="no Image"
+                  alt="User Profile"
                 />
-              )}
-            </div>
-          </Link>
+              </div>
+            </Link>
+          )}
 
+          {/* Logout Button */}
           {usr && (
-            <button onClick={handleLogout} className="font-thin border border-gray-200 p-2 rounded-lg shadow-md">
+            <button
+              onClick={handleLogout}
+              className="font-thin border border-gray-200 p-2 rounded-lg shadow-md"
+            >
               Logout
             </button>
           )}
